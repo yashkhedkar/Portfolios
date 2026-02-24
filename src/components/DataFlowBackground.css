@@ -1,0 +1,43 @@
+.flow-line {
+    stroke: var(--primary);
+    stroke-width: 1;
+    fill: none;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    opacity: 0.2;
+    animation: draw-line 8s ease-in-out infinite alternate;
+}
+
+.flow-line-dashed {
+    stroke: var(--foreground);
+    stroke-width: 1;
+    fill: none;
+    stroke-dasharray: 10 20;
+    /* Dotted effect */
+    opacity: 0.15;
+}
+
+.flow-dot {
+    fill: var(--primary);
+    filter: drop-shadow(0 0 5px var(--primary));
+}
+
+.flow-dot-secondary {
+    fill: var(--foreground);
+}
+
+@keyframes draw-line {
+    0% {
+        stroke-dashoffset: 1000;
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 0.2;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.2;
+    }
+}

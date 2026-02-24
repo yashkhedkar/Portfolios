@@ -1,0 +1,281 @@
+/* Swiper Cards SCSS/CSS Port */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
+
+/* Scoped container instead of body */
+.swiper-cards-section {
+    width: 100%;
+    position: relative;
+    /* Maintain min-height to ensure visibility */
+    min-height: 800px;
+    background: transparent;
+    font-family: "Syne", sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+.sectionWrapper {
+    width: 100%;
+    height: 100%;
+    min-height: 800px;
+    /* Ensure height for the absolute positioning context */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    /* Centering adjusted */
+}
+
+/* Swiper specific overrides */
+.swiper {
+    width: 100%;
+    height: 100%;
+    padding: 50px 20px;
+    overflow: visible !important;
+    /* Overriding swiper default */
+}
+
+.swiper .parallax-bg {
+    position: absolute;
+    right: -5%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    /* background-image removed */
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+.swiper .swiper-wrapper {
+    align-items: center;
+}
+
+.swiper .swiper-slide {
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: transparent;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 0;
+    cursor: grab;
+    user-select: none;
+    text-wrap: pretty;
+    box-sizing: border-box;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.swiper .swiper-slide::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: conic-gradient(from 0deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.1) 20%,
+            hsl(var(--primary)) 50%,
+            rgba(255, 255, 255, 0.1) 80%,
+            transparent 100%);
+    animation: rotate-glow 6s linear infinite;
+    z-index: -2;
+}
+
+.swiper .swiper-slide::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: #1a1a1a;
+    border-radius: 6px;
+    z-index: -1;
+    transition: background 0.3s ease;
+}
+
+.swiper .swiper-slide:hover::after {
+    background: linear-gradient(135deg,
+            hsl(var(--primary) / 0.6),
+            hsl(var(--accent) / 0.6),
+            hsl(var(--primary) / 0.4));
+}
+
+.swiper .swiper-slide:hover::before {
+    background: conic-gradient(from 0deg,
+            transparent 0%,
+            hsl(var(--primary)) 40%,
+            hsl(var(--primary)) 60%,
+            transparent 100%);
+    animation-duration: 3s;
+}
+
+.swiper .swiper-slide .cardPopout {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 7px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.swiper .swiper-slide img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.swiper .swiper-slide h2.title {
+    font-size: 2rem;
+    line-height: 110%;
+    margin: 0 0 7px 0;
+    color: white;
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+}
+
+.swiper .swiper-slide h4.subtitle {
+    font-size: 1.1rem;
+    line-height: 120%;
+    font-weight: 700;
+    margin: 0 0 13px 0;
+    color: #bbb;
+    font-style: italic;
+}
+
+.swiper .swiper-slide figcaption {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0 0 20px 0;
+    padding-left: 0;
+}
+
+.swiper .swiper-slide figcaption p {
+    color: #999;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.swiper .swiper-slide a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border-radius: 3px;
+    text-decoration: none;
+    overflow: hidden;
+    z-index: 10;
+    /* Ensure clickable */
+    transition: all 0.6s ease !important;
+    margin-top: auto;
+    /* Push to bottom if needed */
+}
+
+.swiper .swiper-slide a:hover {
+    color: black;
+    transition: all 0.6s ease;
+}
+
+.swiper .swiper-slide a::after {
+    position: absolute;
+    right: 100%;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(var(--primary));
+    content: "";
+    z-index: -1;
+    transition: all 0.6s ease;
+}
+
+.swiper .swiper-slide a:hover::after {
+    right: 0;
+    transition: all 0.6s ease;
+}
+
+.swiper .swiper-slide a svg {
+    width: 23px;
+    height: auto;
+    fill: white;
+    margin-left: 5px;
+    transition: all 0.6s ease;
+}
+
+.swiper .swiper-slide a:hover svg {
+    margin-left: 10px;
+    fill: black;
+    transition: all 0.6s ease;
+}
+
+
+
+/* Response Media Queries from original */
+@media (min-width: 2000px) {
+    .swiper .swiper-slide {
+        padding: 20px;
+    }
+}
+
+@media (max-height: 550px) {
+    .swiper .swiper-slide figcaption p {
+        -webkit-line-clamp: 2;
+    }
+}
+
+@media (max-height: 490px) {
+    .swiper .swiper-slide figcaption p {
+        -webkit-line-clamp: 1;
+    }
+}
+
+@media (max-height: 460px) {
+    .swiper .swiper-slide figcaption p {
+        display: none;
+    }
+
+    .swiper .swiper-slide h4 {
+        margin: 0;
+    }
+}
+
+@media (max-height: 430px) {
+    .swiper .swiper-wrapper {
+        position: relative;
+        bottom: 6px;
+    }
+}
+
+@media (max-width: 750px) {
+    .swiper .parallax-bg {
+        width: 320%;
+    }
+}
+
+@keyframes rotate-glow {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

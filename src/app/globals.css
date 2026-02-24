@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=Playfair+Display:wght@400&family=Sacramento&family=Roboto:wght@300;400;500;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design System for Interactive Developer Portfolio */
+
+@layer base {
+  :root {
+    --background: 240 5% 9%;
+    /* Lighter, softer dark background */
+    --foreground: 30 10% 85%;
+    /* Slightly dimmer white text */
+
+    --card: 240 4% 12%;
+    /* Lighter card background */
+    --card-foreground: 30 10% 85%;
+
+    --popover: 240 4% 12%;
+    --popover-foreground: 30 10% 85%;
+
+    --primary: 14 90% 58%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 30 10% 85%;
+
+    --muted: 240 4% 18%;
+    --muted-foreground: 240 5% 60%;
+
+    --accent: 25 100% 60%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 4% 20%;
+    --input: 240 4% 20%;
+    --ring: 14 90% 58%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --glow: 14 90% 58%;
+    --surface: 240 4% 12%;
+    --surface-hover: 240 4% 16%;
+
+    /* Duplicate overrides removed/merged */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: initial;
+    /* Lenis handles smoothing */
+    overflow-x: hidden;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    @apply text-foreground font-sans antialiased;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-primary;
+  }
+
+  .glow {
+    box-shadow: 0 0 40px hsl(var(--glow) / 0.3),
+      0 0 80px hsl(var(--glow) / 0.1);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px hsl(var(--primary) / 0.4),
+      0 0 40px hsl(var(--primary) / 0.2);
+  }
+
+  .magnetic-button {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+
+  .magnetic-button::before {
+    content: '';
+    @apply absolute inset-0 bg-primary/10 scale-0 rounded-full transition-transform duration-500;
+  }
+
+  .magnetic-button:hover::before {
+    @apply scale-150;
+  }
+
+  .card-hover {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px hsl(var(--primary) / 0.15),
+      0 0 0 1px hsl(var(--primary) / 0.1);
+  }
+
+  .split-text span {
+    @apply inline-block;
+  }
+
+  .marquee {
+    animation: marquee 20s linear infinite;
+  }
+
+  .marquee:hover {
+    animation-play-state: paused;
+  }
+
+  .font-roboto {
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
+
+.bg-radial {
+  background: radial-gradient(circle at center, hsl(var(--background)), #000);
+}
+
+.text-glow-teal {
+  text-shadow: 0 0 10px hsl(var(--teal) / 0.5),
+    0 0 20px hsl(var(--teal) / 0.3);
+}
+
+.fill-loader-text {
+  fill: hsl(var(--foreground));
+}
+
+.fill-loader-ring {
+  fill: hsl(var(--muted));
+}
+
+.fill-teal {
+  fill: hsl(var(--teal));
+}
+
+.stroke-teal {
+  stroke: hsl(var(--teal));
+}
+
+.fill-green {
+  fill: hsl(var(--green));
+}
+
+.stroke-green {
+  stroke: hsl(var(--green));
+}
+
+
+@keyframes scroll-down {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: translateY(12px);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-scroll-down {
+  animation: scroll-down 2s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+/* Shiny Edge Effect - Orange */
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotation {
+  0% {
+    --gradient-angle: 0deg;
+  }
+
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+.shiny-edge-orange {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  /* border-color: transparent !important; Removed to keep original border */
+}
+
+.shiny-edge-orange::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  /* Align with border */
+
+  z-index: 10;
+  /* Sit on top */
+
+  pointer-events: none;
+  border-radius: inherit;
+  background: conic-gradient(from var(--gradient-angle),
+      transparent,
+      hsl(var(--primary) / 0.5),
+      hsl(var(--primary)),
+      hsl(var(--primary) / 0.5),
+      transparent);
+  animation: rotation 3s linear infinite;
+
+  /* Mask to show only border */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1.8px;
+  /* Shine width */
+}
+
+/* Alternative approach if the above has masking issues on some backgrounds */
+.shiny-edge-orange-alt {
+  position: relative;
+  border: 1px solid transparent;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+    conic-gradient(from var(--gradient-angle), transparent 20%, hsl(var(--primary)), transparent 50%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: rotation 4s linear infinite;
+}

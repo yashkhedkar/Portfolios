@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,400i,700");
+
+/* Reset/Base styles handling by global CSS, but included here for completeness of snippet */
+/* .card-container acts as the perspective wrapper */
+.card-container {
+    perspective: 50em;
+    width: 100%;
+    height: 100%;
+    /* Define the background image variable for all cards - Subtler gradient */
+    --bi: repeating-linear-gradient(30deg, hsl(240 5% 10%) 0 0.25em, hsl(240 5% 13%) 0 1em);
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    /* Adapative width instead of fixed 320px */
+    min-height: 406px;
+    height: 100%;
+    /* Ensure sufficient height */
+    padding: 3em;
+    color: #fff;
+    transform: rotateY(19deg) rotateX(10deg);
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    background: transparent;
+    /* Background is provided by layers */
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: rotateY(-19deg) rotateX(-10deg);
+}
+
+
+
+.layers {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    z-index: -1;
+}
+
+.layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 1em;
+    background-image: var(--bi);
+    transform: translateZ(var(--tz));
+    box-shadow: 0 0 0.5em #000d inset;
+    border: 1px solid hsl(var(--primary) / 0.3);
+    transition: all 0.5s ease;
+}
+
+/* Loop for layer translation */
+.layer:nth-child(1) {
+    --tz: 0px;
+}
+
+.card:hover .layer {
+    border-color: hsl(var(--primary) / 0.8);
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.2) inset;
+}
+
+/* Glow Animation on the first layer (Face) */
+.layer:nth-child(1)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg,
+            transparent 0%,
+            hsla(var(--primary), 0.05) 40%,
+            hsla(var(--primary), 0.4) 50%,
+            hsla(var(--primary), 0.05) 60%,
+            transparent 100%);
+    z-index: 2;
+    mix-blend-mode: color-dodge;
+    background-size: 100% 200%;
+    animation: scan-glow 3s linear infinite;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.card:hover .layer:nth-child(1)::after {
+    animation-duration: 1.5s;
+    background: linear-gradient(180deg,
+            transparent 0%,
+            hsla(var(--primary), 0.2) 40%,
+            hsla(var(--primary), 1) 50%,
+            hsla(var(--primary), 0.2) 60%,
+            transparent 100%);
+}
+
+@keyframes scan-glow {
+    0% {
+        background-position: 50% -100%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        background-position: 50% 200%;
+        opacity: 0;
+    }
+}
+
+.layer:nth-child(2) {
+    --tz: -4px;
+}
+
+.layer:nth-child(3) {
+    --tz: -8px;
+}
+
+.layer:nth-child(4) {
+    --tz: -12px;
+}
+
+.layer:nth-child(5) {
+    --tz: -16px;
+}
+
+.layer:nth-child(6) {
+    --tz: -20px;
+}
+
+.layer:nth-child(7) {
+    --tz: -24px;
+}
+
+.layer:nth-child(8) {
+    --tz: -28px;
+}
+
+.layer:nth-child(9) {
+    --tz: -32px;
+}
+
+.layer:nth-child(10) {
+    --tz: -36px;
+}
+
+.layer:last-child {
+    box-shadow: 0 0 0.5em #000d inset, 0 0 5px #000;
+}
+
+/* Content styling to ensure it's legible and positioned */
+.card-content {
+    transform: translateZ(20px);
+    /* Lift content slightly */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure title and text use the font if requested, or inherit project font */
+.card-content h3,
+.card-content ul {
+    backface-visibility: hidden;
+}

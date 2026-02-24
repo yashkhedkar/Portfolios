@@ -1,0 +1,422 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;700;800&display=swap");
+
+.projects-section-container {
+    --duration: 0.8s;
+    --color-purple: #f0562e;
+    font-family: 'Raleway', sans-serif;
+    color: white;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+    position: relative;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+}
+
+/* App Structure */
+.app {
+    display: grid;
+    grid-template-columns: 10% 1fr 10%;
+    grid-template-rows: 1fr;
+    width: 100%;
+    flex: 1;
+    min-height: 600px;
+    /* Ensure minimum space for slider */
+    place-items: center;
+}
+
+.app>.dashes {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    margin: -1rem;
+    stroke: var(--color-purple);
+    stroke-linecap: round;
+    stroke-width: 0.6;
+    width: 71%;
+    height: 71%;
+    fill: none;
+    animation: rotate 15s linear infinite;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+/* Slide Container */
+.slide {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    padding: 2rem;
+    --radius: 35vmin;
+    width: calc(var(--radius) * 2);
+    height: calc(var(--radius) * 2);
+    display: grid;
+    grid-template-areas: "layer";
+    place-items: center;
+
+    --default-animation: model-enter;
+    --name-animation: name-enter;
+    --image-animation: image-enter;
+    --stat-animation: stat-enter;
+    --quote-animation: quote-enter;
+    --delay: var(--duration);
+    z-index: 1;
+}
+
+.slide>* {
+    grid-area: layer;
+    animation: var(--default-animation) var(--duration) ease-in-out var(--delay) both;
+}
+
+.slide[data-previous] {
+    z-index: 0;
+    --default-animation: fade-out;
+    --name-animation: name-exit;
+    --image-animation: image-exit;
+    --stat-animation: stat-exit;
+    --quote-animation: quote-exit;
+    --delay: 0s;
+}
+
+/* Element Placements */
+
+/* 1. Name (Title) */
+.slide-name {
+    align-self: end;
+    z-index: 2;
+    text-align: center;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: white;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0;
+    --default-animation: var(--name-animation);
+}
+
+/* 2. Image (Center Circle) */
+.slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    --default-animation: var(--image-animation);
+}
+
+/* 3. Stats (Radial) */
+.slide-stat {
+    display: inline-block;
+    color: #fff;
+    max-width: 16em;
+    z-index: 3;
+    --default-animation: var(--stat-animation);
+
+    /* Radial Calculation */
+    /* --i is index, --stats is total count */
+    --d: calc(var(--i) / var(--stats));
+    --r-offset: -0.4turn;
+    --r: calc(var(--r-offset) + (-0.3turn * var(--d)));
+
+    /* Transform: Rotate to angle -> Push out -> Unrotate */
+    transform: rotate(var(--r)) translate(var(--radius)) rotate(calc(-1 * var(--r)));
+}
+
+.slide-stat:last-of-type {
+    --r: calc(var(--r-offset) + 0.45turn);
+    /* Position specifically */
+}
+
+/* 4. Quote (Description Bubble) */
+/* 4. Quote (Description Bubble) with Glassy + Shiny Edge */
+/* 4. Quote (Description Bubble) with Glassy + Shiny Edge */
+.slide-quote {
+    top: 0;
+    left: 0;
+    min-width: 15rem;
+
+    /* Glass Effect (Consistent) */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.37),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 22em;
+    z-index: 4;
+    position: relative;
+    overflow: hidden;
+
+    --r: 0.9turn;
+    transform: rotate(var(--r)) translate(var(--radius)) rotate(calc(-1 * var(--r)));
+
+    --default-animation: var(--quote-animation);
+}
+
+/* Shiny Edge Animation */
+.slide-quote::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1.5rem;
+    padding: 1px;
+
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.4),
+            rgba(255, 255, 255, 0.05) 40%,
+            rgb(255, 255, 255) 50%,
+            rgba(255, 255, 255, 0.05) 60%,
+            rgba(255, 255, 255, 0.4));
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    background-size: 200% 200%;
+    animation: shine-card 6s linear infinite;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+@keyframes shine-card {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes name-enter {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@keyframes name-exit {
+    from {
+        transform: none;
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes model-enter {
+    from {
+        transform: translate(30%, -30%) scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@keyframes image-enter {
+    from {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@keyframes image-exit {
+    from {
+        transform: none;
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+}
+
+@property --r-offset {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0turn;
+}
+
+@keyframes stat-enter {
+    from {
+        --r-offset: -0.5turn;
+        opacity: 0;
+    }
+}
+
+@keyframes stat-exit {
+    to {
+        --r-offset: -0.3turn;
+        opacity: 0;
+    }
+}
+
+@keyframes quote-enter {
+    from {
+        transform: translate(75%, -150%) scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(100%, -200%);
+        opacity: 1;
+    }
+}
+
+@keyframes quote-exit {
+    from {
+        transform: translate(100%, -200%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translate(75%, -150%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+/* Sub-elements styles */
+.stat-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    font-weight: bold;
+    color: var(--color-purple);
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Button */
+.button.-next,
+.button.-prev {
+    grid-row: 1 / -1;
+    align-self: center;
+    z-index: 10;
+
+    appearance: none;
+    /* Glass Effect */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+    color: white;
+    font-weight: bold;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    line-height: 1.3;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button.-next {
+    grid-column: -2 / -1;
+}
+
+.button.-prev {
+    grid-column: 1 / 2;
+}
+
+.button.-next:hover,
+.button.-prev:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    border-color: var(--color-purple);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .slide {
+        --radius: 42vw;
+    }
+
+    .slide-name {
+        font-size: 2.5rem;
+    }
+
+    .slide-quote {
+        display: none;
+    }
+
+    /* Hide bubble on mobile */
+    .button.-next,
+    .button.-prev {
+        width: 60px;
+        height: 60px;
+        font-size: 0.7rem;
+        opacity: 0.8;
+    }
+}
