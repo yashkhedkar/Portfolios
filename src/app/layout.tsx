@@ -11,6 +11,7 @@ import CustomCursor from '@/components/CustomCursor';
 
 import SmoothScroller from '@/components/SmoothScroller';
 import BlackHoleBackground from '@/components/BlackHoleBackground';
+import { ChatWidget } from '@/components/ChatWidget';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
           <ClientLoader>
             <TooltipProvider>
               {children}
+              <ChatWidget />
               <Toaster />
               <Sonner />
             </TooltipProvider>
