@@ -82,30 +82,18 @@ export function ChatWidget() {
             {/* Messages Area */}
             <div 
                 ref={scrollRef} 
-                className="flex-1 overflow-y-auto p-4 space-y-4 pt-6 custom-scrollbar scroll-smooth"
+                className="flex-1 overflow-y-auto p-4 space-y-4 pt-6 scroll-smooth"
+                style={{
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: 'hsl(var(--primary)) transparent'
+                }}
             >
-              <style jsx>{`
-                .custom-scrollbar::-webkit-scrollbar {
-                  width: 6px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                  background: transparent;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                  background: #ff5722; /* Fallback to a warm color related to your primary */
-                  background: hsl(var(--primary));
-                  border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                  opacity: 0.8;
-                }
-              `}</style>
               {messages.map((m, i) => (
                 <div key={i} className={`flex ${m.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
                     m.type === 'user' 
                       ? 'bg-primary text-white ml-auto rounded-tr-none shadow-[0_5px_15px_rgba(var(--primary-rgb),0.3)]' 
-                      : 'bg-white/5 text-white/90 mr-auto rounded-tl-none'
+                      : 'bg-white/5 text-white/90 mr-auto rounded-tl-none border border-white/5'
                   }`}>
                     <div className="flex items-center gap-2 mb-2 opacity-40 text-[9px] font-bold uppercase tracking-[0.2em]">
                         {m.type === 'user' ? <><User size={10} /> You</> : <><Bot size={10} /> Yash AI</>}
@@ -118,10 +106,10 @@ export function ChatWidget() {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-white/5 p-3 rounded-2xl rounded-tl-none border border-white/5 flex gap-1.5 px-4">
-                    <div className="w-1.5 h-1.5 bg-primary/50 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                    <div className="w-1.5 h-1.5 bg-primary/50 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                    <div className="w-1.5 h-1.5 bg-primary/50 rounded-full animate-bounce" />
+                  <div className="bg-white/5 p-3 rounded-2xl rounded-tl-none border border-white/5 flex gap-1.5 px-4 shadow-sm">
+                    <div className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                    <div className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                    <div className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" />
                   </div>
                 </div>
               )}
